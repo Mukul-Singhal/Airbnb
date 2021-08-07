@@ -9,7 +9,7 @@ import {
 
 function Header() {
   return (
-    <header className="sticky grid grid-cols-3 bg-white shadow-md p-5 md:px-10">
+    <header className="sticky grid grid-cols-3 z-50 bg-white shadow-md p-5 md:px-10">
       {/* Logo */}
       <div className="relative flex items-center h-10 cursor-pointer my-auto">
         <Image
@@ -30,7 +30,7 @@ function Header() {
       </div>
       {/* Right Side Menu */}
       <div className="flex items-center justify-end space-x-4 text-gray-500">
-        <p>Become a Member</p>
+        <p className="hidden md:inline">Become a Member</p>
         <GlobeAltIcon className="h-6 cursor-pointer" />
         <div className="flex border-2 space-x-2  rounded-full p-2">
           <MenuIcon className="h-6 cursor-pointer" />
