@@ -9,19 +9,40 @@ import {
 } from "@heroicons/react/solid";
 
 import { DateRangePicker } from "react-date-range";
+import { useRouter } from "next/dist/client/router";
 
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
-function Header() {
+function Header({ placeholder }) {
   const [searchInput, setSearchInput] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [noOfGuests, setNoOfGuests] = useState(1);
+  const router = useRouter();
+
+  const handleInput = (ranges) => {
+    setStartDate(ranges.selection.startDate);
+    setEndDate(ranges.selection.endDate);
+  };
+
+  const handleSearch = () => {
+    router.push({
+      pathname: "/search",
+
+      query: {
+        location: searchInput,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        noOfGuests: noOfGuests,
+      },
+    });
+  };
 
   const selectionRange = {
     startDate: startDate,
     endDate: endDate,
-    key: "Selection",
+    key: "selection",
   };
 
   return (
@@ -30,6 +51,7 @@ function Header() {
       <div className="relative flex items-center h-10 cursor-pointer my-auto">
         <Image
           src="https://links.papareact.com/qd3"
+          onClick={() => router.push("/")}
           objectFit="contain"
           layout="fill"
           objectPosition="left"
@@ -42,7 +64,7 @@ function Header() {
           onChange={(e) => setSearchInput(e.target.value)}
           className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 placeholder-gray-400"
           type="text"
-          placeholder="Search Your Text"
+          placeholder={placeholder || "Start Your Search"}
         />
         <SearchIcon className="hidden md:flex h-8 bg-red-400 text-white rounded-full p-2 md:mx-2" />
       </div>
@@ -56,7 +78,41 @@ function Header() {
         </div>
       </div>
 
-      {searchInput && <DateRangePicker ranges={[selectionRange]} />}
+      {searchInput && (
+        <div className="flex flex-col col-span-3 mx-auto">
+          <DateRangePicker
+            ranges={[selectionRange]}
+            minDate={new Date()}
+            rangeColors={["#FD5861"]}
+            onChange={handleInput}
+          />
+          <div className="flex items-center border-b mb-4">
+            <h2 className="text-2xl flex-grow font-semibold">
+              {" "}
+              Number of Guests
+            </h2>
+            <UsersIcon className="h-4" />
+            <input
+              type="number"
+              value={noOfGuests}
+              onChange={(e) => setNoOfGuests(e.target.value)}
+              className="w-12 outline-none pl-2 text-lg text-red-400"
+            />
+          </div>
+          <div className="flex">
+            <button
+              className="flex-grow text-gray-400"
+              onClick={() => setSearchInput("")}
+            >
+              Cancel
+            </button>
+            <button
+              className="flex-grow text-red-400"
+              onClick={handleSearch}
+            ></button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
