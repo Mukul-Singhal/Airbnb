@@ -101,15 +101,17 @@ function Header({ placeholder }) {
           </div>
           <div className="flex">
             <button
-              className="flex-grow text-gray-400"
+              className="p-2 flex-grow text-gray-400 rounded-2xl hover:shadow-md"
               onClick={() => setSearchInput("")}
             >
               Cancel
             </button>
             <button
-              className="flex-grow text-red-400"
+              className=" p-2 flex-grow text-red-400 rounded-2xl hover:shadow-md"
               onClick={handleSearch}
-            ></button>
+            >
+              Search
+            </button>
           </div>
         </div>
       )}
