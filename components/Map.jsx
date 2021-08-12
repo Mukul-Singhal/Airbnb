@@ -29,7 +29,7 @@ function Map({ searchResult }) {
   return (
     <ReactMapGL
       mapStyle="mapbox://styles/mukul-singhal-/cks5yhmgt4p0x18qqfi2obsf1"
-      mapboxApiAccessToken="pk.eyJ1IjoibXVrdWwtc2luZ2hhbC0iLCJhIjoiY2tzNXNqem40MHdjcTJ1cGhucG52bDIyMiJ9.9IR9MteGxHs7HsQIhnReZg"
+      mapboxApiAccessToken={ process.env.mapbox_key}
       {...viewport}
       onViewportChange={(nextViewport) => setViewPort(nextViewport)}
     >
