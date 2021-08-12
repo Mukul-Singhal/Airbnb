@@ -2,8 +2,10 @@ import * as React from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
 import getCenter from "geolib/es/getCenter";
 
+import MapBoxCard from "./MapBoxCard";
+
 function Map({ searchResult }) {
-  const [selectedlocation, setSelectedLocation] = React.useState({});
+  const [selectedLocation, setSelectedLocation] = React.useState({});
 
   const coordinates = searchResult.map((item) => {
     return {
@@ -22,6 +24,8 @@ function Map({ searchResult }) {
     zoom: 14,
   });
 
+  console.log(selectedLocation);
+
   return (
     <ReactMapGL
       mapStyle="mapbox://styles/mukul-singhal-/cks5yhmgt4p0x18qqfi2obsf1"
@@ -29,16 +33,38 @@ function Map({ searchResult }) {
       {...viewport}
       onViewportChange={(nextViewport) => setViewPort(nextViewport)}
     >
-      {searchResult.map(({ long, lat }) => (
-        <div key={long}>
+      {searchResult.map((result) => (
+        <div key={result.long}>
           <Marker
-            latitude={lat}
-            longitude={long}
+            latitude={result.lat}
+            longitude={result.long}
             offsetLeft={-20}
             offsetTop={-10}
+            className=""
           >
-            <p className="text-2xl">📌</p>
+            <p
+              role="img"
+              onClick={() => setSelectedLocation(result)}
+              className="text-2xl cursor-pointer animate-bounce z-0"
+              aria-label="push-pin"
+            >
+              📌
+            </p>
           </Marker>
+
+          {selectedLocation.long === result.long ? (
+            <Popup
+              onClose={() => setSelectedLocation({})}
+              closedOnClick={true}
+              latitude={result.lat}
+              longitude={result.long}
+              className="rounded-lg z-10"
+            >
+              <MapBoxCard result={result} />
+            </Popup>
+          ) : (
+            false
+          )}
         </div>
       ))}
     </ReactMapGL>

@@ -1,6 +1,10 @@
 import Image from "next/image";
 import { HeartIcon, StarIcon } from "@heroicons/react/solid";
 function InfoCard({ img, location, title, description, star, price, total }) {
+  // const handleClick = () => {
+  //   setPopupValue(img,title,price)
+  // }
+
   return (
     <div className="flex py-7 px-2 pr-4 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 easeout first:border-t">
       <div className="relative h-24 w-40 md:h-52 md:w-80 flex-shrink-0">

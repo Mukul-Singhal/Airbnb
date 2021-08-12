@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useRouter } from "next/dist/client/router";
 
 import Header from "../components/Header";
@@ -7,6 +8,8 @@ import InfoCard from "../components/InfoCard.jsx";
 import { format } from "date-fns";
 
 function Search({ searchResult }) {
+  // const [popupValue, setPopupValue] = useState({});
+
   const router = useRouter();
   const { location, startDate, endDate, noOfGuests } = router.query;
   console.log(startDate, endDate, noOfGuests);
@@ -46,6 +49,7 @@ function Search({ searchResult }) {
                   star={star}
                   price={price}
                   total={total}
+                  // setpopupvalue={setPopupValue}
                 />
               )
             )}
